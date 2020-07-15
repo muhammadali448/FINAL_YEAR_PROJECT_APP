@@ -13,7 +13,7 @@ export default class App extends Component {
     this.state = {
       isEnabled: false,
       device: {},
-      devices: []
+      devices: [],
     };
     this.bs = BS;
   }
@@ -25,7 +25,7 @@ export default class App extends Component {
       shadow: true,
       animation: true,
       hideOnPress: true,
-      delay: 0
+      delay: 0,
     });
   }
 
@@ -35,7 +35,7 @@ export default class App extends Component {
       this.displayToast("Bluetooth enabled");
       BS.on("bluetoothEnabled", () => this.displayToast("Bluetooth enabled"));
       BS.on("bluetoothDisabled", () => this.displayToast("Bluetooth disabled"));
-      BS.on("error", error => console.log("Error: ", error.message));
+      BS.on("error", (error) => console.log("Error: ", error.message));
       BS.on("connectionLost", () => {
         if (this.state.device) {
           this.displayToast(
@@ -53,13 +53,14 @@ export default class App extends Component {
       const devices = await BS.list();
       console.log("DEVICES: ", devices);
       if (devices.length > 0) {
-        const hc05 = devices.filter(device => device.name === "HC-05")[0];
+        const hc05 = devices.filter((device) => device.name === "HC-05")[0];
         console.log("HC-05 Connected: ", hc05.id);
         await Promise.all([BS.connect(hc05.id), BS.withDelimiter("\n")]);
         // await BS.connect(hc05.id);
         this.displayToast(`Connected to device ${hc05.name}`);
         // await BS.withDelimiter("\n");
-        BS.on("read", data => {
+        BS.on("read", (data) => {
+          console.log("----READ DATA:", data);
           this.displayToast(data.data);
           Tts.getInitStatus().then(() => {
             Tts.speak(data.data);
@@ -82,7 +83,17 @@ export default class App extends Component {
             created by Muhammad Ali, Yasir Abbas and Maryam Jahangir
           </Text>
         </View>
-        <Button block style={styles.buttonStyle} onPress={this.connectHc05}>
+        <Button
+          block
+          iconLeft
+          style={styles.buttonStyle}
+          onPress={this.connectHc05}
+        >
+          <Icon
+            name="bluetooth-connected"
+            type="MaterialIcons"
+            style={{ color: "#10c1c1", textAlign: "left" }}
+          />
           <Text style={styles.btnTextStyle}>Connect</Text>
         </Button>
       </LinearGradientComponent>

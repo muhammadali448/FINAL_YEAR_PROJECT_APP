@@ -48,12 +48,12 @@ const styles = StyleSheet.create({
     marginRight: "auto"
   },
   btnTextStyle: {
-    height: 18,
+    // height: 18,
     fontSize: 16,
     fontWeight: "bold",
     fontStyle: "normal",
-    lineHeight: 19,
-    letterSpacing: 0,
+    // lineHeight: 19,
+    // letterSpacing: 0,
     textAlign: "left",
     color: "#10c1c1"
   }
